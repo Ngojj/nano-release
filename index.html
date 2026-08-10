@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tải Ví Nano cho Android</title>
+<meta name="description" content="Tải ứng dụng Ví Nano cho Android — chuyển tiền nhanh trong một chạm.">
+<meta name="color-scheme" content="light">
+<style>
+  :root { --green:#00A85E; --green-dark:#00934F; --ink:#111C17; --muted:#6B7A72;
+          --line:#E4EDE8; --warn-bg:#FFF4E0; --warn-ink:#8A5A00; --warn-line:#F2D9A6; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { margin:0; padding:26px 18px 40px; background:#F6F9F7; color:var(--ink);
+         font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+         display:flex; justify-content:center; }
+  .wrap { width:100%; max-width:430px; }
+  .card { background:#fff; border-radius:22px; padding:28px 24px;
+          box-shadow:0 8px 30px rgba(0,0,0,.07); }
+  .logo { width:60px; height:60px; margin:0 auto 16px; border-radius:17px; background:var(--green);
+          display:flex; align-items:center; justify-content:center;
+          color:#fff; font-size:31px; font-weight:800; letter-spacing:-1px; }
+  h1 { margin:0 0 6px; font-size:25px; text-align:center; letter-spacing:-.3px; }
+  .tag { margin:0 0 24px; text-align:center; color:var(--muted); font-size:14.5px; }
+
+  /* Khối cảnh báo LUÔN hiện cho mọi người — không phụ thuộc vào việc nhận diện được
+     trình duyệt trong app. Nhận diện được thì chỉ làm nó nổi bật hơn (class .loud). */
+  .warn { border:1px solid var(--warn-line); background:var(--warn-bg); color:var(--warn-ink);
+          border-radius:14px; padding:14px 16px; font-size:13.5px; line-height:1.65; margin-bottom:20px; }
+  .warn b { color:#6B4500; }
+  .warn.loud { border-width:2px; box-shadow:0 0 0 4px rgba(242,217,166,.35); }
+  .warn .title { display:block; font-weight:700; font-size:14.5px; margin-bottom:5px; }
+
+  a.btn { display:block; text-align:center; text-decoration:none; font-weight:700;
+          padding:16px; border-radius:14px; font-size:16px; }
+  a.primary { background:var(--green); color:#fff; }
+  a.primary:active { background:var(--green-dark); }
+  a.ghost { margin-top:10px; background:#fff; color:var(--green); border:1.5px solid var(--line); font-size:15px; }
+
+  .size { margin:12px 0 0; text-align:center; font-size:12.5px; color:var(--muted); }
+  .steps { margin-top:26px; padding-top:22px; border-top:1px solid var(--line); }
+  .steps h2 { margin:0 0 12px; font-size:12.5px; letter-spacing:.7px; text-transform:uppercase; color:var(--muted); }
+  ol { margin:0; padding-left:21px; font-size:14.5px; line-height:1.8; }
+  .ios { margin-top:20px; padding:13px 15px; background:#F1F4F2; border-radius:12px;
+         font-size:13px; line-height:1.6; color:var(--muted); }
+  .foot { margin-top:18px; text-align:center; font-size:11.5px; color:var(--muted); word-break:break-all; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="logo">n</div>
+    <h1>Ví Nano</h1>
+    <p class="tag">Chuyển tiền nhanh trong một chạm</p>
+
+    <!-- VÌ SAO trang này tồn tại: QR không trỏ thẳng vào file .apk được. Zalo/Messenger mở link
+         quét được bằng WebView trong app, mà WebView không tự tải tệp — app chủ phải tự xử lý
+         MIME type, và các app đó từ chối application/vnd.android.package-archive, báo "định dạng
+         tệp không được hỗ trợ". Trang HTML thì chúng mở bình thường. -->
+    <div class="warn" id="warn">
+      <span class="title" id="warnTitle">Đang mở trong Zalo, Messenger hay TikTok?</span>
+      Các ứng dụng đó <b>không tải được tệp APK</b>. Hãy bấm <b>⋮</b> (hoặc <b>⋯</b>) ở góc trên
+      rồi chọn <b>Mở trong trình duyệt</b> — sau đó bấm nút tải bên dưới.
+    </div>
+
+    <a class="btn primary" id="dl"
+       href="https://github.com/khieudangbk/Nano-Releases/releases/latest/download/nano.apk">
+      Tải Nano cho Android
+    </a>
+    <!-- Lối thoát cho Android: intent:// thường được WebView bàn giao sang Chrome. Chỉ là phương
+         án phụ, ẩn sẵn và chỉ hiện trên Android — không app nào cũng honor nên KHÔNG dùng làm
+         nút chính. -->
+    <a class="btn ghost" id="chrome" style="display:none"
+       href="intent://ngojj.github.io/nano-release/#Intent;scheme=https;action=android.intent.action.VIEW;end">
+      Mở trang này bằng Chrome
+    </a>
+    <p class="size">Khoảng 62 MB — nên tải bằng Wi-Fi</p>
+
+    <div class="steps">
+      <h2>Cách cài đặt</h2>
+      <ol>
+        <li>Bấm <b>Tải Nano cho Android</b> ở trên.</li>
+        <li>Mở tệp <b>nano.apk</b> vừa tải về.</li>
+        <li>Nếu máy chặn, chọn <b>Cài đặt</b> và cho phép cài từ nguồn này.</li>
+        <li>Mở Ví Nano và đăng nhập.</li>
+      </ol>
+      <div class="ios">
+        Trang này dành cho <b>Android</b>. Tệp APK không cài được trên iPhone/iPad.
+      </div>
+    </div>
+
+    <p class="foot">ngojj.github.io/nano-release</p>
+  </div>
+</div>
+
+<script>
+  // Nhận diện trình duyệt trong app + Android. CHỈ để nhấn mạnh cảnh báo và hiện lối thoát
+  // Chrome — cảnh báo vẫn hiện cho mọi người, nên đoán sai User-Agent cũng không hỏng gì.
+  (function () {
+    var ua = navigator.userAgent || "";
+    var inApp = /Zalo|FBAN|FBAV|FB_IAB|Instagram|TikTok|Line\/|MicroMessenger/i.test(ua);
+    var android = /Android/i.test(ua);
+    if (inApp) {
+      var w = document.getElementById("warn");
+      w.classList.add("loud");
+      document.getElementById("warnTitle").textContent =
+        "Bạn đang mở trong ứng dụng — tải APK sẽ bị chặn";
+    }
+    if (android && inApp) document.getElementById("chrome").style.display = "block";
+  })();
+</script>
+</body>
+</html>
