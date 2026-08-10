@@ -88,7 +88,7 @@
     <dl>
       <dt>Phiên bản</dt><dd id="ver">1.0.1</dd>
       <dt>Dung lượng</dt><dd id="size">59 MB</dd>
-      <dt>Cập nhật</dt><dd id="date">08/08/2026</dd>
+      <dt>Cập nhật</dt><dd id="date">10/08/2026</dd>
       <dt>Yêu cầu</dt><dd>Android 8.0 trở lên</dd>
       <dt>Phát hành bởi</dt><dd>Ví Nano — Bảo Kim</dd>
     </dl>
@@ -133,11 +133,16 @@
     .then(function (d) {
       if (!d) return;
       if (d.tag_name) set("ver", String(d.tag_name).replace(/^v/, ""));
-      if (d.published_at) {
-        var t = new Date(d.published_at), p = function (x) { return ("0" + x).slice(-2); };
+      var apk = (d.assets || []).filter(function (a) { return /\.apk$/i.test(a.name); })[0];
+      // Ngay lay tu CHINH TEP APK (asset.updated_at), KHONG lay published_at cua ban phat hanh.
+      // Ly do: tep moi co the duoc tai len de vao ban phat hanh cu (cung the v1.0.1) — luc do
+      // published_at dung im o ngay cu trong khi tep nguoi dung tai ve da khac. Chi khi khong co
+      // tep nao thi moi lui ve published_at.
+      var when = (apk && (apk.updated_at || apk.created_at)) || d.published_at;
+      if (when) {
+        var t = new Date(when), p = function (x) { return ("0" + x).slice(-2); };
         set("date", p(t.getDate()) + "/" + p(t.getMonth() + 1) + "/" + t.getFullYear());
       }
-      var apk = (d.assets || []).filter(function (a) { return /\.apk$/i.test(a.name); })[0];
       if (apk && apk.size) { set("size", mb(apk.size)); set("under", "Tệp APK · " + mb(apk.size)); }
     })
     .catch(function () { /* giu so mac dinh */ });
